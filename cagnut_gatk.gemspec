@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Cagnut Gatk tools}
   spec.description   = %q{Cagnut Gatk tools}
-  spec.homepage      = "https://github.com/cagnut/cagnut_gatk"
+  spec.homepage      = "https://github.com/CAGNUT/cagnut_gatk"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency 'cagnut'
+  spec.add_dependency 'cagnut_core'
 
   spec.add_development_dependency "bundler", "~> 1.12"
   spec.add_development_dependency "rake", "~> 10.0"
