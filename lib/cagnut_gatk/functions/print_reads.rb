@@ -7,6 +7,7 @@ module CagnutGatk
     def_delegators :'CagnutGatk.config', :print_reads_params
 
     def initialize opts = {}
+      @order = sprintf '%02i', opts[:order]
       @job_name = "#{prefix_name}_PrintReads_#{sample_name}"
       @input = opts[:input].nil? ? "#{opts[:dirs][:input]}/#{sample_name}_realn.bam" : opts[:input]
       @output = "#{opts[:dirs][:output]}/#{output_file}"
@@ -43,7 +44,7 @@ module CagnutGatk
     end
 
     def generate_script
-      script_name = 'gatk_print_reads'
+      script_name = "#{@order}_gatk_print_reads"
       file = File.join jobs_dir, "#{script_name}.sh"
       path = File.expand_path '../templates/print_reads.sh', __FILE__
       template = Tilt.new path

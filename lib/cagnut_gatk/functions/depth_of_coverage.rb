@@ -7,6 +7,7 @@ module CagnutGatk
     def_delegators :'CagnutGatk.config', :depth_of_coverage_params
 
     def initialize opts = {}
+      @order = sprintf '%02i', opts[:order]
       @suffix = opts[:suffix]
       @target_file = opts[:target]
       @job_name = "#{prefix_name}_#{sample_name}_#{@suffix}_depthofcoverage"
@@ -33,7 +34,7 @@ module CagnutGatk
     end
 
     def generate_script
-      file_name = "gatk_depth_of_coverage_#{@suffix}"
+      file_name = "#{@order}_gatk_depth_of_coverage_#{@suffix}"
       file = File.join jobs_dir, "#{file_name}.sh"
       path = File.expand_path '../templates/depth_of_coverage.sh', __FILE__
       template = Tilt.new path

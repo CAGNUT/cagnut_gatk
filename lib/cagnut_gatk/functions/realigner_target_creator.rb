@@ -8,6 +8,7 @@ module CagnutGatk
     def_delegators :'CagnutGatk.config', :realigner_target_creator_params
 
     def initialize opts = {}
+      @order = sprintf '%02i', opts[:order]
       @job_name = "#{prefix_name}_realignTargetCreator_#{sample_name}"
       @input = opts[:input].nil? ? "#{opts[:dirs][:input]}/#{sample_name}_markdup.bam" : opts[:input]
       @output = "#{opts[:dirs][:output]}/#{sample_name}_markdup.interval_list"
@@ -58,7 +59,7 @@ module CagnutGatk
     end
 
     def generate_script
-      script_name = 'gatk_realigner_target_creator'
+      script_name = "#{@order}_gatk_realigner_target_creator"
       file = File.join jobs_dir, "#{script_name}.sh"
       File.open(file, 'w') do |f|
         f.puts <<-BASH.strip_heredoc

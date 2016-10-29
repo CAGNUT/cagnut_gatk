@@ -7,6 +7,7 @@ module CagnutGatk
     def_delegators :'CagnutGatk.config', :analyze_covariates_params
 
     def initialize opts = {}
+      @order = sprintf '%02i', opts[:order]
       @job_name = "#{prefix_name}_AnalyzeCovariates_#{sample_name}"
       @input = opts[:input].nil? ? "#{opts[:dirs][:input]}/#{sample_name}_realn.bam" : opts[:input]
       @recal_csv = "#{opts[:dirs][:contrast]}/#{replace_filename('_recal.csv')}"
@@ -46,7 +47,7 @@ module CagnutGatk
     end
 
     def generate_script
-      script_name = 'gatk_analyze_covariates'
+      script_name = "#{@order}_gatk_analyze_covariates"
       file = File.join jobs_dir, "#{script_name}.sh"
       path = File.expand_path '../templates/analyze_covariates.sh', __FILE__
       template = Tilt.new path

@@ -7,6 +7,7 @@ module CagnutGatk
     def_delegators :'CagnutGatk.config', :variant_filtration_params
 
     def initialize opts = {}
+      @order = sprintf '%02i', opts[:order]
       @input = opts[:input].nil? ? "#{opts[:dirs][:input]}/#{sample_name}.vcf" : opts[:input]
       @job_name = "#{prefix_name}_snpFiltr_#{sample_name}"
       @output = "#{opts[:dirs][:output]}/#{sample_name}_filtered.vcf"
@@ -49,7 +50,7 @@ module CagnutGatk
     end
 
     def generate_script
-      script_name = 'gatk_variant_filtration'
+      script_name = "#{@order}_gatk_variant_filtration"
       file = File.join jobs_dir, "#{script_name}.sh"
       File.open(file, 'w') do |f|
         f.puts <<-BASH.strip_heredoc

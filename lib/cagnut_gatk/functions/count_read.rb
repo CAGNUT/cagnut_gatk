@@ -7,6 +7,7 @@ module CagnutGatk
     def_delegators :'CagnutGatk.config', :count_reads_params
 
     def initialize opts = {}
+      @order = sprintf '%02i', opts[:order]
       @target = opts[:target]
       @suffix = @target.nil? ? 'genome.readct' : 'target.readct'
       @input = opts[:input].nil? ? "#{opts[:dirs][:input]}/#{sample_name}_markdup.bam" : opts[:input]
@@ -31,7 +32,7 @@ module CagnutGatk
     end
 
     def generate_script
-      script_name = "gatk_count_reads_#{@suffix}"
+      script_name = "#{@order}_gatk_count_reads_#{@suffix}"
       file = File.join jobs_dir, "#{script_name}.sh"
       path = File.expand_path '../templates/count_read.sh', __FILE__
       template = Tilt.new path

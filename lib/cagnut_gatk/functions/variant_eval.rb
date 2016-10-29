@@ -7,6 +7,7 @@ module CagnutGatk
     def_delegators :'CagnutGatk.config', :variant_eval_params
 
     def initialize opts = {}
+      @order = sprintf '%02i', opts[:order]
       @vcf_dir = opts[:dirs][:output]
       @input = opts[:input].nil? ? "#{opts[:dirs][:input]}/#{sample_name}_filtered.vcf" : opts[:input]
       @output = "#{@vcf_dir}/#{sample_name}.eval"
@@ -53,7 +54,7 @@ module CagnutGatk
     end
 
     def generate_script
-      script_name = 'gatk_variant_eval'
+      script_name = "#{@order}_gatk_variant_eval"
       file = File.join jobs_dir, "#{script_name}.sh"
       ltag = target.nil? ? '' : "-L #{target}"
       File.open(file, 'w') do |f|

@@ -8,6 +8,7 @@ module CagnutGatk
     def_delegators :'CagnutGatk.config', :base_recalibrator_params
 
     def initialize opts = {}
+      @order = sprintf '%02i', opts[:order]
       @csv_dir = opts[:dirs][:output]
       @has_bqsr_file = opts[:has_bqsr_file]
       @input = opts[:file_name].nil? ? "#{opts[:dirs][:input]}/#{sample_name}_realn.bam" : opts[:input]
@@ -47,7 +48,7 @@ module CagnutGatk
     end
 
     def generate_script
-      script_name = @has_bqsr_file ? 'gatk_base_recalibrator_post' : 'gatk_base_recalibrator'
+      script_name = @has_bqsr_file ? "#{@order}_gatk_base_recalibrator_post" : "#{@order}_gatk_base_recalibrator"
       file = File.join jobs_dir, "#{script_name}.sh"
       path = File.expand_path "../templates/base_recalibrator.sh", __FILE__
       template = Tilt.new path

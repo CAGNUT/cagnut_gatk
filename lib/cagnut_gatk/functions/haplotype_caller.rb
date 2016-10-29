@@ -7,6 +7,7 @@ module CagnutGatk
     def_delegators :'CagnutGatk.config', :haplotype_caller_params
 
     def initialize opts = {}
+      @order = sprintf '%02i', opts[:order]
       @input = opts[:input].nil? ? "#{opts[:dirs][:input]}/#{sample_name}_recal.bam" : opts[:input]
       @output = "#{opts[:dirs][:output]}/#{sample_name}.vcf"
       @job_name = "#{prefix_name}_haplotype_caller_#{sample_name}"
@@ -55,7 +56,7 @@ module CagnutGatk
     end
 
     def generate_script
-      script_name = 'gatk_haplotype_caller'
+      script_name = "#{@order}_gatk_haplotype_caller"
       file = File.join jobs_dir, "#{script_name}.sh"
       File.open(file, 'w') do |f|
         f.puts <<-BASH.strip_heredoc

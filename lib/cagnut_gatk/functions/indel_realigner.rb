@@ -8,6 +8,7 @@ module CagnutGatk
     def_delegators :'CagnutGatk.config', :indel_realigner_params
 
     def initialize opts = {}
+      @order = sprintf '%02i', opts[:order]
       @job_name = "#{prefix_name}_indelRealigner_#{sample_name}"
       @interval_list = opts[:interval_list]
       @input = opts[:input].nil? ? "#{opts[:dirs][:input]}/#{sample_name}_markdup.bam" : opts[:input]
@@ -54,7 +55,7 @@ module CagnutGatk
     end
 
     def generate_script
-      script_name = 'gatk_indel_realigner'
+      script_name = "#{@order}_gatk_indel_realigner"
       file = File.join jobs_dir, "#{script_name}.sh"
       File.open(file, 'w') do |f|
         f.puts <<-BASH.strip_heredoc
