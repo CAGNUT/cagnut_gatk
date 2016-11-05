@@ -27,7 +27,7 @@ module CagnutGatk
       previous_job_id, filename, order = indel_realigner dirs, order, previous_job_id, filename, interval_list
       previous_job_id, order = base_recalibrator dirs, order, previous_job_id, filename
       previous_job_id, filename = print_reads dirs, order, previous_job_id, filename
-      [previous_job_id, previous_job_id, order+1]
+      [previous_job_id, filename, order+1]
     end
 
     def realigner_target_creator dirs, order=1, previous_job_id=nil, filename=nil
