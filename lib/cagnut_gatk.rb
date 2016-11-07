@@ -12,5 +12,6 @@ module CagnutGatk
 end
 
 require 'cagnut_gatk/configuration'
+require 'cagnut_gatk/check_tools'
 require 'cagnut_gatk/base'
 require 'cagnut_gatk/util'
